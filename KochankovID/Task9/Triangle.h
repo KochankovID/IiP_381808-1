@@ -8,6 +8,7 @@ public:
 	//конструкторы
 	Triangle();
 	Triangle(int a, int b, int c);
+	Triangle(const Triangle &);
 
 	//методы
 	bool isExists();

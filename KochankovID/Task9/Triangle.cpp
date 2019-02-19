@@ -16,6 +16,13 @@ Triangle::Triangle(int a, int b, int c)
 	this->c = c;
 }
 
+Triangle::Triangle(const Triangle & t)
+{
+	a = (const_cast <Triangle&> (t)).A();
+	b = (const_cast <Triangle&> (t)).B();
+	c = (const_cast <Triangle&> (t)).C();
+}
+
 bool Triangle::isExists()
 {
 	int s1 = a + b;
