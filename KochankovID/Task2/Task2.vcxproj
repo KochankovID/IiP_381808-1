@@ -146,7 +146,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source1.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="ClassMatrixTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Matrix.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Text.txt">
+      <DeploymentContent>true</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
