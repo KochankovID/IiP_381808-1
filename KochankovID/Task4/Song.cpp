@@ -1,4 +1,4 @@
-#include "Song.h"
+ï»¿#include "Song.h"
 #include <boost_1_69_0/boost/algorithm/string/replace.hpp>
 
 Song::Song(const std::string & Location_, const std::string & NameSong_, const std::string & Album_,
@@ -77,22 +77,22 @@ std::istream & operator>>(std::istream & stream, Song & C)
 //void Song::OutSong(const std::string& str) const
 //{
 //	std::cout << str << std::endl;
-//	std::cout << "Ïåñíÿ: " << nameSong << std::endl;
-//	std::cout << "Àëüáîì: " << album << std::endl;
-//	if (!(poet.Name() == "Íåèçâåñòíî")) {
-//		std::cout << "Ïîýò: ";
+//	std::cout << "ÐŸÐµÑÐ½Ñ: " << nameSong << std::endl;
+//	std::cout << "ÐÐ»ÑŒÐ±Ð¾Ð¼: " << album << std::endl;
+//	if (!(poet.Name() == "ÐÐµÐ¸Ð·Ð²ÐµÑÑ‚Ð½Ð¾")) {
+//		std::cout << "ÐŸÐ¾ÑÑ‚: ";
 //		poet.OutPerson();
 //	}
-//	if (!(compositer.Name() == "Íåèçâåñòíî")) {
-//		std::cout << "Êîìïîçèòîð: ";
+//	if (!(compositer.Name() == "ÐÐµÐ¸Ð·Ð²ÐµÑÑ‚Ð½Ð¾")) {
+//		std::cout << "ÐšÐ¾Ð¼Ð¿Ð¾Ð·Ð¸Ñ‚Ð¾Ñ€: ";
 //		compositer.OutPerson();
 //	}
-//	if (!(executor.Name() == "Íåèçâåñòíî")) {
-//		std::cout << "Èñïîëíèòåëü: ";
+//	if (!(executor.Name() == "ÐÐµÐ¸Ð·Ð²ÐµÑÑ‚Ð½Ð¾")) {
+//		std::cout << "Ð˜ÑÐ¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒ: ";
 //		executor.OutPerson();
 //	}
 //	if (!(dataRelease.Year() == 0)) {
-//		std::cout << "Äàòà âûõîäà ïåñíè: ";
+//		std::cout << "Ð”Ð°Ñ‚Ð° Ð²Ñ‹Ñ…Ð¾Ð´Ð° Ð¿ÐµÑÐ½Ð¸: ";
 //		dataRelease.OutData();
 //	}
 //}

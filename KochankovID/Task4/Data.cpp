@@ -1,4 +1,4 @@
-#include "Data.h"
+п»ї#include "Data.h"
 
 Data::Data(const int& day_, const int& month_, const int& year_) : day(day_),
 month(month_), year(year_) {
@@ -31,13 +31,13 @@ Data::~Data()
 void Data::IsRight() const
 {
 	if ((day < 0) || (day > 31)) {
-		throw Data::InvalideData("Неверный формат дней!");
+		throw Data::InvalideData("РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ РґРЅРµР№!");
 	}
 	if ((month < 0) || (month > 12)) {
-		throw Data::InvalideData("Неверный формат месяцев!");
+		throw Data::InvalideData("РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ РјРµСЃСЏС†РµРІ!");
 	}
 	if (year < 0) {
-		throw Data::InvalideData("Неверный формат годов!");
+		throw Data::InvalideData("РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ РіРѕРґРѕРІ!");
 	}
 }
 

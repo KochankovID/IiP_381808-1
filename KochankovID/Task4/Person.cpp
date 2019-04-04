@@ -1,4 +1,4 @@
-#include "Person.h"
+п»ї#include "Person.h"
 #include <boost_1_69_0/boost/algorithm/string/replace.hpp>
 
 
@@ -10,9 +10,9 @@ Person::Person(const std::string & Name_,
 	biography(Biography_),
 	age(age_)
 {
-	// Если возраст не в ходит в диопазон жизни человека вызывается исключение
+	// Р•СЃР»Рё РІРѕР·СЂР°СЃС‚ РЅРµ РІ С…РѕРґРёС‚ РІ РґРёРѕРїР°Р·РѕРЅ Р¶РёР·РЅРё С‡РµР»РѕРІРµРєР° РІС‹Р·С‹РІР°РµС‚СЃСЏ РёСЃРєР»СЋС‡РµРЅРёРµ
 	if ((age < 0) || (age > 200)) {
-		throw AgeError("Задан невозможный возраст!");
+		throw AgeError("Р—Р°РґР°РЅ РЅРµРІРѕР·РјРѕР¶РЅС‹Р№ РІРѕР·СЂР°СЃС‚!");
 	}
 }
 
@@ -61,7 +61,7 @@ std::istream & operator>>(std::istream & stream, Person & C)
 	stream >> C.biography;
 	stream >> C.age;
 	if ((C.age < 0) || (C.age > 200)) {
-		throw Person::AgeError("Задан невозможный возраст!");
+		throw Person::AgeError("Р—Р°РґР°РЅ РЅРµРІРѕР·РјРѕР¶РЅС‹Р№ РІРѕР·СЂР°СЃС‚!");
 	}
 	boost::replace_all(C.name, std::string("#&@"), std::string(" "));
 	boost::replace_all(C.female, std::string("#&@"), std::string(" "));

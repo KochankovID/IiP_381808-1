@@ -1,4 +1,4 @@
-#include "Interface.h"
+п»ї#include "Interface.h"
 #include <fstream>
 #include <iostream>
 #include <bass.h>
@@ -10,7 +10,7 @@
 using namespace std;
 Interface::Interface(): Archive(new ClassSongs("Saved.txt")), Menu(new ClassMenu())
 {
-	// Установка нужного шрифта консоли
+	// РЈСЃС‚Р°РЅРѕРІРєР° РЅСѓР¶РЅРѕРіРѕ С€СЂРёС„С‚Р° РєРѕРЅСЃРѕР»Рё
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_FONT_INFOEX cfie;
 	ZeroMemory(&cfie, sizeof(cfie));
@@ -29,13 +29,13 @@ void Interface::StartMenu()
 {
 	while (true) {
 		Menu->setKol(7);
-		(*Menu)[0] = "Поэты";
-		(*Menu)[1] = "Композиторы";
-		(*Menu)[2] = "Исполнители";
-		(*Menu)[3] = "Песни";
-		(*Menu)[4] = "Поиск";
-		(*Menu)[5] = "Добавить песню";
-		(*Menu)[6] = "Выход";
+		(*Menu)[0] = "РџРѕСЌС‚С‹";
+		(*Menu)[1] = "РљРѕРјРїРѕР·РёС‚РѕСЂС‹";
+		(*Menu)[2] = "РСЃРїРѕР»РЅРёС‚РµР»Рё";
+		(*Menu)[3] = "РџРµСЃРЅРё";
+		(*Menu)[4] = "РџРѕРёСЃРє";
+		(*Menu)[5] = "Р”РѕР±Р°РІРёС‚СЊ РїРµСЃРЅСЋ";
+		(*Menu)[6] = "Р’С‹С…РѕРґ";
 		string title[] = { "Ilya_Player Version 1" };
 		int a[] = { 0 };
 		(*Menu).DrawCMenu(1, a, title, 0, 0, 2, 2);
@@ -69,22 +69,22 @@ void Interface::StartMenu()
 void Interface::MenuWAP()
 {
 	Collection<string> titles;
-	titles.Add("Исполнители");
+	titles.Add("РСЃРїРѕР»РЅРёС‚РµР»Рё");
 	Collection<int> nums;
 	nums.Add(0);
 	Collection<Person*> Poets = (*Archive).getPoets();
 	(*Menu).setKol(Poets.Count()+1);
 	for (int i = 0; i < Poets.Count(); i++) {
-		(*Menu)[i] = "Имя: " + Poets[i]->Name() + " Фамилия: " + Poets[i]->Female() + " Возраст: " + std::to_string(Poets[i]->Age());
+		(*Menu)[i] = "РРјСЏ: " + Poets[i]->Name() + " Р¤Р°РјРёР»РёСЏ: " + Poets[i]->Female() + " Р’РѕР·СЂР°СЃС‚: " + std::to_string(Poets[i]->Age());
 	}
 	if (Poets.Count() == 0) {
 		(*Menu).setKol(1);
-		(*Menu)[0] = "Поэты не найдены!";
+		(*Menu)[0] = "РџРѕСЌС‚С‹ РЅРµ РЅР°Р№РґРµРЅС‹!";
 	}
 	else {
 		titles.Add("--------------------------------------------");
 		nums.Add(Poets.Count());
-		(*Menu)[Poets.Count()] = "Назад";
+		(*Menu)[Poets.Count()] = "РќР°Р·Р°Рґ";
 	}
 	(*Menu).DrawCMenu(nums.Count(), nums.AsArray(), titles.AsArray(),0,0,1,2);
 	if ((*Menu).getLastClause() != (Poets.Count()+1)) {
@@ -96,20 +96,20 @@ void Interface::MenuWAP()
 void Interface::MenuWAC()
 {
 	Collection<string> titles;
-	titles.Add("Композиторы ");
+	titles.Add("РљРѕРјРїРѕР·РёС‚РѕСЂС‹ ");
 	Collection<int> nums;
 	nums.Add(0);
 	Collection<Person*> Compositers = (*Archive).getComositers();
 	(*Menu).setKol(Compositers.Count() + 1);
 	for (int i = 0; i < Compositers.Count(); i++) {
-		(*Menu)[i] ="Имя: " + Compositers[i]->Name() + " Фамилия: " + Compositers[i]->Female() + " Возраст: " + std::to_string(Compositers[i]->Age());
+		(*Menu)[i] ="РРјСЏ: " + Compositers[i]->Name() + " Р¤Р°РјРёР»РёСЏ: " + Compositers[i]->Female() + " Р’РѕР·СЂР°СЃС‚: " + std::to_string(Compositers[i]->Age());
 	}
 	if (Compositers.Count() == 0) {
 		(*Menu).setKol(1);
-		(*Menu)[0] = "Композиторы не найдены!";
+		(*Menu)[0] = "РљРѕРјРїРѕР·РёС‚РѕСЂС‹ РЅРµ РЅР°Р№РґРµРЅС‹!";
 	}
 	else {
-		(*Menu)[Compositers.Count()] = "Назад";
+		(*Menu)[Compositers.Count()] = "РќР°Р·Р°Рґ";
 		titles.Add("--------------------------------------------");
 		nums.Add(Compositers.Count());
 	}
@@ -123,22 +123,22 @@ void Interface::MenuWAC()
 void Interface::MenuWAE()
 {
 	Collection<string> titles;
-	titles.Add("Исполнители");
+	titles.Add("РСЃРїРѕР»РЅРёС‚РµР»Рё");
 	Collection<int> nums;
 	nums.Add(0);
 	Collection<Person*> Executors = (*Archive).getExecutorts();
 	(*Menu).setKol(Executors.Count() + 1);
 	for (int i = 0; i < Executors.Count(); i++) {
-		(*Menu)[i] = "Имя: "+Executors[i]->Name() + " Фамилия: " + Executors[i]->Female() + " Возраст: " + std::to_string(Executors[i]->Age());
+		(*Menu)[i] = "РРјСЏ: "+Executors[i]->Name() + " Р¤Р°РјРёР»РёСЏ: " + Executors[i]->Female() + " Р’РѕР·СЂР°СЃС‚: " + std::to_string(Executors[i]->Age());
 	}
 	if (Executors.Count() == 0) {
 		(*Menu).setKol(1);
-		(*Menu)[0] = "Исполнители не найдены!";
+		(*Menu)[0] = "РСЃРїРѕР»РЅРёС‚РµР»Рё РЅРµ РЅР°Р№РґРµРЅС‹!";
 	}
 	else {
 		titles.Add("--------------------------------------------");
 		nums.Add(Executors.Count());
-		(*Menu)[Executors.Count()] = "Назад";
+		(*Menu)[Executors.Count()] = "РќР°Р·Р°Рґ";
 	}
 	(*Menu).DrawCMenu(nums.Count(), nums.AsArray(), titles.AsArray(), 0, 0, 1, 2);
 	if ((*Menu).getLastClause() != (Executors.Count() + 1)) {
@@ -151,23 +151,23 @@ void Interface::MenuWAS()
 {
 	Collection<Song>& Songs = (*Archive).songs();
 	Collection<string> titles;
-	titles.Add("Песен: " + std::to_string(Songs.Count()));
+	titles.Add("РџРµСЃРµРЅ: " + std::to_string(Songs.Count()));
 	Collection<int> nums;
 	nums.Add(0);
 	(*Menu).setKol(Songs.Count() + 1);
 
 	for (int i = 0; i < Songs.Count(); i++) {
-		(*Menu)[i] = Songs[i].NameSong() + " Альбом: " + Songs[i].Album() + " Исполнитель: " + Songs[i].Executor().Name() +
-			" Поэт: " + Songs[i].Poet().Name() + " Композитор: " + Songs[i].Compositer().Name();
+		(*Menu)[i] = Songs[i].NameSong() + " РђР»СЊР±РѕРј: " + Songs[i].Album() + " РСЃРїРѕР»РЅРёС‚РµР»СЊ: " + Songs[i].Executor().Name() +
+			" РџРѕСЌС‚: " + Songs[i].Poet().Name() + " РљРѕРјРїРѕР·РёС‚РѕСЂ: " + Songs[i].Compositer().Name();
 	}
 	if (Songs.Count() == 0) {
 		(*Menu).setKol(1);
-		(*Menu)[0] = "Песни не найдены!";
+		(*Menu)[0] = "РџРµСЃРЅРё РЅРµ РЅР°Р№РґРµРЅС‹!";
 	}
 	else {
 		titles.Add("--------------------------------------------");
 		nums.Add(Songs.Count());
-		(*Menu)[Songs.Count()] = "Назад";
+		(*Menu)[Songs.Count()] = "РќР°Р·Р°Рґ";
 	}
 	(*Menu).DrawCMenu(nums.Count(), nums.AsArray(), titles.AsArray(), 0, 0, 1, 2);
 	if ((*Menu).getLastClause() != (Songs.Count() + 1)) {
@@ -179,24 +179,24 @@ void Interface::MenuWAS()
 void Interface::MenuWAS(Person * peson, Collection<Song*>(ClassSongs::*songs)(const Person&))
 {
 	Collection<string> titles;
-	titles.Add("Песни");
+	titles.Add("РџРµСЃРЅРё");
 	Collection<int> nums;
 	nums.Add(0);
 	Collection<Song*> Songs = (Archive._Myptr()->*songs)(*peson);
 	(*Menu).setKol(Songs.Count() + 1);
 
 	for (int i = 0; i < Songs.Count(); i++) {
-		(*Menu)[i] = Songs[i]->NameSong() + " Альбом: " + Songs[i]->Album() + " Исполнитель: " + Songs[i]->Executor().Name() +
-			" Поэт: " + Songs[i]->Poet().Name() + " Композитор: " + Songs[i]->Compositer().Name();
+		(*Menu)[i] = Songs[i]->NameSong() + " РђР»СЊР±РѕРј: " + Songs[i]->Album() + " РСЃРїРѕР»РЅРёС‚РµР»СЊ: " + Songs[i]->Executor().Name() +
+			" РџРѕСЌС‚: " + Songs[i]->Poet().Name() + " РљРѕРјРїРѕР·РёС‚РѕСЂ: " + Songs[i]->Compositer().Name();
 	}
 	if (Songs.Count() == 0) {
 		(*Menu).setKol(1);
-		(*Menu)[0] = "Песни не найдены!";
+		(*Menu)[0] = "РџРµСЃРЅРё РЅРµ РЅР°Р№РґРµРЅС‹!";
 	}
 	else {
 		titles.Add("--------------------------------------------");
 		nums.Add(Songs.Count());
-		(*Menu)[Songs.Count()] = "Назад";
+		(*Menu)[Songs.Count()] = "РќР°Р·Р°Рґ";
 	}
 	(*Menu).DrawCMenu(nums.Count(), nums.AsArray(), titles.AsArray(), 0, 0, 1, 2);
 	if ((*Menu).getLastClause() != (Songs.Count() + 1)) {
@@ -209,9 +209,9 @@ void Interface::SearchMenu()
 {
 	Collection<string> titles;
 	Collection<int> nums;
-	titles.Add("Поиск");
+	titles.Add("РџРѕРёСЃРє");
 	nums.Add(0);
-	cout << "Песни, исполнители, композиторы, поэты... :";
+	cout << "РџРµСЃРЅРё, РёСЃРїРѕР»РЅРёС‚РµР»Рё, РєРѕРјРїРѕР·РёС‚РѕСЂС‹, РїРѕСЌС‚С‹... :";
 	string str;
 	std::getline(cin, str);
 	while (0 == str.find(' '))
@@ -224,50 +224,50 @@ void Interface::SearchMenu()
 
 	(*Menu).setKol(Songs.Count()+Poets.Count()+Compositers.Count()+Executors.Count() + 1);
 	for (int i = 0; i < Songs.Count(); i++) {
-		(*Menu)[i] = Songs[i] ->NameSong() + " Альбом: " + Songs[i] ->Album();
+		(*Menu)[i] = Songs[i] ->NameSong() + " РђР»СЊР±РѕРј: " + Songs[i] ->Album();
 	}
 
 	if (Songs.Count() != 0) {
-		titles.Add("Песни: ");
+		titles.Add("РџРµСЃРЅРё: ");
 		nums.Add(0);
 	}
 
 	for (int i = 0; i < Poets.Count(); i++) {
-		(*Menu)[Songs.Count() + i] = "Имя: " + (*Poets[i]).Name() + " Фамилия: " + (*Poets[i]).Female() + " Возраст: " + std::to_string((*Poets[i]).Age());
+		(*Menu)[Songs.Count() + i] = "РРјСЏ: " + (*Poets[i]).Name() + " Р¤Р°РјРёР»РёСЏ: " + (*Poets[i]).Female() + " Р’РѕР·СЂР°СЃС‚: " + std::to_string((*Poets[i]).Age());
 	}
 
 	if (Poets.Count() != 0) {
-		titles.Add("Поэты: ");
+		titles.Add("РџРѕСЌС‚С‹: ");
 		nums.Add(Songs.Count());
 	}
 
 	for (int i = 0; i < Compositers.Count(); i++) {
-		(*Menu)[Songs.Count() + Poets.Count()+i] = "Имя: " + (*Compositers[i]).Name() + " Фамилия: " + (*Compositers[i]).Female() + " Возраст: " + std::to_string((*Compositers[i]).Age());
+		(*Menu)[Songs.Count() + Poets.Count()+i] = "РРјСЏ: " + (*Compositers[i]).Name() + " Р¤Р°РјРёР»РёСЏ: " + (*Compositers[i]).Female() + " Р’РѕР·СЂР°СЃС‚: " + std::to_string((*Compositers[i]).Age());
 	}
 
 	if (Compositers.Count() != 0) {
-		titles.Add("Композиторы: ");
+		titles.Add("РљРѕРјРїРѕР·РёС‚РѕСЂС‹: ");
 		nums.Add(Songs.Count() + Poets.Count());
 	}
 
 	for (int i = 0; i < Executors.Count(); i++) {
-		(*Menu)[Songs.Count()+Compositers.Count() + Poets.Count() + i] = "Имя: " + (*Executors[i]).Name() + " Фамилия: " + (*Executors[i]).Female() + " Возраст: " + std::to_string((*Executors[i]).Age());
+		(*Menu)[Songs.Count()+Compositers.Count() + Poets.Count() + i] = "РРјСЏ: " + (*Executors[i]).Name() + " Р¤Р°РјРёР»РёСЏ: " + (*Executors[i]).Female() + " Р’РѕР·СЂР°СЃС‚: " + std::to_string((*Executors[i]).Age());
 	}
 
 	if (Executors.Count() != 0) {
-		titles.Add("Исполнители: ");
+		titles.Add("РСЃРїРѕР»РЅРёС‚РµР»Рё: ");
 		nums.Add(Compositers.Count() + Songs.Count() + Poets.Count());
 	}
 
 
 	if (Executors.Count() + Compositers.Count() + Songs.Count() + Poets.Count() == 0) {
 		(*Menu).setKol(1);
-		(*Menu)[0] = "Ничего не найденно!";
+		(*Menu)[0] = "РќРёС‡РµРіРѕ РЅРµ РЅР°Р№РґРµРЅРЅРѕ!";
 	}
 	else {
 		titles.Add("--------------------------------------------");
 		nums.Add(Compositers.Count() + Songs.Count() + Poets.Count()+Executors.Count());
-		(*Menu)[Executors.Count() + Compositers.Count() + Songs.Count() + Poets.Count()] = "Назад";
+		(*Menu)[Executors.Count() + Compositers.Count() + Songs.Count() + Poets.Count()] = "РќР°Р·Р°Рґ";
 	}
 
 	(*Menu).DrawCMenu(nums.Count(), nums.AsArray(), titles.AsArray(), 0, 0, 1, 1);
@@ -297,15 +297,15 @@ void Interface::OptionsPersonMenu(Person* person, Collection<Song*>(ClassSongs::
 {
 	Collection<string> titles;
 	Collection<int> nums;
-	titles.Add("Опции");
+	titles.Add("РћРїС†РёРё");
 	nums.Add(0);
 
 	Menu->setKol(5);
-	(*Menu)[0] = "Посмотреть информацию";
-	(*Menu)[1] = "Редактировать информацию";
-	(*Menu)[2] = "Показать все песни";
-	(*Menu)[3] = "Удалить";
-	(*Menu)[4] = "Выход в меню";
+	(*Menu)[0] = "РџРѕСЃРјРѕС‚СЂРµС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ";
+	(*Menu)[1] = "Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ";
+	(*Menu)[2] = "РџРѕРєР°Р·Р°С‚СЊ РІСЃРµ РїРµСЃРЅРё";
+	(*Menu)[3] = "РЈРґР°Р»РёС‚СЊ";
+	(*Menu)[4] = "Р’С‹С…РѕРґ РІ РјРµРЅСЋ";
 	(*Menu).DrawCMenu(1, nums.AsArray(), titles.AsArray(), 0, 0, 2, 2);
 
 	Person copy(*person);
@@ -330,15 +330,15 @@ void Interface::OptionsSongMenu(Song* song)
 {
 	Collection<string> titles;
 	Collection<int> nums;
-	titles.Add("Опции");
+	titles.Add("РћРїС†РёРё");
 	nums.Add(0);
 
 	Menu->setKol(5);
-	(*Menu)[0] = "Воспризвести";
-	(*Menu)[1] = "Посмотреть информацию";
-	(*Menu)[2] = "Редактировать информацию";
-	(*Menu)[3] = "Удалить";
-	(*Menu)[4] = "Выход в меню";
+	(*Menu)[0] = "Р’РѕСЃРїСЂРёР·РІРµСЃС‚Рё";
+	(*Menu)[1] = "РџРѕСЃРјРѕС‚СЂРµС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ";
+	(*Menu)[2] = "Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ";
+	(*Menu)[3] = "РЈРґР°Р»РёС‚СЊ";
+	(*Menu)[4] = "Р’С‹С…РѕРґ РІ РјРµРЅСЋ";
 	(*Menu).DrawCMenu(1, nums.AsArray(), titles.AsArray(), 0, 0, 2, 2);
 
 	switch ((*Menu).getLastClause()) {
@@ -361,11 +361,11 @@ void Interface::InfoPerson(Person * person)
 {
 	Collection<string> titles;
 	Collection<int> nums;
-	titles.Add("Информация");
+	titles.Add("РРЅС„РѕСЂРјР°С†РёСЏ");
 	nums.Add(0);
 	(*Menu).setKol(1);
-	(*Menu)[0] = "Имя: " + person->Name() + "\nФамилия: "+ person->Female()
-		+ "\nВозраст: " + std::to_string(person->Age())+"\nБиография: " + person->Biography();
+	(*Menu)[0] = "РРјСЏ: " + person->Name() + "\nР¤Р°РјРёР»РёСЏ: "+ person->Female()
+		+ "\nР’РѕР·СЂР°СЃС‚: " + std::to_string(person->Age())+"\nР‘РёРѕРіСЂР°С„РёСЏ: " + person->Biography();
 	(*Menu).DrawCMenu(1, nums.AsArray(), titles.AsArray(), 0, 0, 2, 2);
 	return;
 }
@@ -374,11 +374,11 @@ void Interface::InfoSong(const Song * song)
 {
 	Collection<string> titles;
 	Collection<int> nums;
-	titles.Add("Информация");
+	titles.Add("РРЅС„РѕСЂРјР°С†РёСЏ");
 	nums.Add(0);
 	(*Menu).setKol(1);
-	(*Menu)[0] = "Имя песни: " + song->NameSong() + "\nАльбом: " + song->Album()
-		+ "\nДата релиза: " + song->DataRelease().ToString() + "\nПуть до песни: " + song->Location();
+	(*Menu)[0] = "РРјСЏ РїРµСЃРЅРё: " + song->NameSong() + "\nРђР»СЊР±РѕРј: " + song->Album()
+		+ "\nР”Р°С‚Р° СЂРµР»РёР·Р°: " + song->DataRelease().ToString() + "\nРџСѓС‚СЊ РґРѕ РїРµСЃРЅРё: " + song->Location();
 	(*Menu).DrawCMenu(1, nums.AsArray(), titles.AsArray(), 0, 0, 2, 2);
 	return;
 }
@@ -387,31 +387,31 @@ void Interface::RedactSong(Song * song)
 {
 	Collection<string> titles;
 	Collection<int> nums;
-	titles.Add("Редактирование информации");
+	titles.Add("Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё");
 	nums.Add(0);
 	while (true) {
 
 		Menu->setKol(8);
-		(*Menu)[0] = "Имя песни: " + song->NameSong();
-		(*Menu)[1] = "Альбом: " + song->Album();
-		(*Menu)[2] = "Дата релиза: " + song->DataRelease().ToString();
-		(*Menu)[3] = "Путь: " + song->Location();
-		(*Menu)[4] = "Поэт: " + song->Poet().Name() + " " + song->Poet().Female();
-		(*Menu)[5] = "Композитор: " + song->Compositer().Name() + " " + song->Compositer().Female();
-		(*Menu)[6] = "Исполнитель: " + song->Executor().Name() + " " + song->Executor().Female();
-		(*Menu)[7] = "Выход в меню";
+		(*Menu)[0] = "РРјСЏ РїРµСЃРЅРё: " + song->NameSong();
+		(*Menu)[1] = "РђР»СЊР±РѕРј: " + song->Album();
+		(*Menu)[2] = "Р”Р°С‚Р° СЂРµР»РёР·Р°: " + song->DataRelease().ToString();
+		(*Menu)[3] = "РџСѓС‚СЊ: " + song->Location();
+		(*Menu)[4] = "РџРѕСЌС‚: " + song->Poet().Name() + " " + song->Poet().Female();
+		(*Menu)[5] = "РљРѕРјРїРѕР·РёС‚РѕСЂ: " + song->Compositer().Name() + " " + song->Compositer().Female();
+		(*Menu)[6] = "РСЃРїРѕР»РЅРёС‚РµР»СЊ: " + song->Executor().Name() + " " + song->Executor().Female();
+		(*Menu)[7] = "Р’С‹С…РѕРґ РІ РјРµРЅСЋ";
 		(*Menu).DrawCMenu(1, nums.AsArray(), titles.AsArray(), 0, 0, 2, 2);
 
 		switch ((*Menu).getLastClause()) {
-		case 1: cout << "Введите имя песни: ";
+		case 1: cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ РїРµСЃРЅРё: ";
 			std::getline(cin, song->NameSong());
 
 			break;
-		case 2: cout << "Введите альбом: ";
+		case 2: cout << "Р’РІРµРґРёС‚Рµ Р°Р»СЊР±РѕРј: ";
 			std::getline(cin, song->Album());
 			
 			break;
-		case 3: cout << "Введите дату релиза: ";
+		case 3: cout << "Р’РІРµРґРёС‚Рµ РґР°С‚Сѓ СЂРµР»РёР·Р°: ";
 			try {
 				cin >> song->DataRelease();
 			}
@@ -421,7 +421,7 @@ void Interface::RedactSong(Song * song)
 			}
 			break;
 			
-		case 4: cout << "Введите путь: ";
+		case 4: cout << "Р’РІРµРґРёС‚Рµ РїСѓС‚СЊ: ";
 			std::getline(cin, song->Location());
 			
 			break;
@@ -446,27 +446,27 @@ void Interface::RedactPeron(Person * person, void(ClassSongs::*change)(const Per
 	while (true) {
 		Collection<string> titles;
 		Collection<int> nums;
-		titles.Add("Редактирование информации");
+		titles.Add("Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё");
 		nums.Add(0);
 
 		Menu->setKol(5);
-		(*Menu)[0] = "Имя: " + person->Name();
-		(*Menu)[1] = "Фамилия: " + person->Female();
-		(*Menu)[2] = "Возраст: " + std::to_string(person->Age());
-		(*Menu)[3] = "Биография: " + person->Biography();
-		(*Menu)[4] = "Назад";
+		(*Menu)[0] = "РРјСЏ: " + person->Name();
+		(*Menu)[1] = "Р¤Р°РјРёР»РёСЏ: " + person->Female();
+		(*Menu)[2] = "Р’РѕР·СЂР°СЃС‚: " + std::to_string(person->Age());
+		(*Menu)[3] = "Р‘РёРѕРіСЂР°С„РёСЏ: " + person->Biography();
+		(*Menu)[4] = "РќР°Р·Р°Рґ";
 		(*Menu).DrawCMenu(1, nums.AsArray(), titles.AsArray(), 0, 0, 2, 2);
 
 		switch ((*Menu).getLastClause()) {
-		case 1: cout << "Введите имя: ";
+		case 1: cout << "Р’РІРµРґРёС‚Рµ РёРјСЏ: ";
 			std::getline(cin,person->Name());
 			
 			break;
-		case 2: cout << "Введите фамилию: ";
+		case 2: cout << "Р’РІРµРґРёС‚Рµ С„Р°РјРёР»РёСЋ: ";
 			std::getline(cin, person->Female());
 			
 			break;
-		case 3: cout << "Введите возраст: ";
+		case 3: cout << "Р’РІРµРґРёС‚Рµ РІРѕР·СЂР°СЃС‚: ";
 			try {
 				cin >> person->Age();
 			}
@@ -476,7 +476,7 @@ void Interface::RedactPeron(Person * person, void(ClassSongs::*change)(const Per
 			}
 			cin.ignore(cin.rdbuf()->in_avail());
 			break;
-		case 4:cout << "Введите Биографию: ";
+		case 4:cout << "Р’РІРµРґРёС‚Рµ Р‘РёРѕРіСЂР°С„РёСЋ: ";
 			std::getline(cin, person->Biography());
 			
 			break;
@@ -492,37 +492,37 @@ void Interface::RedactPeron(Person * person, void(ClassSongs::*change)(const Per
 void Interface::PlaySong(const Song * song)
 {
 
-	HSTREAM stream;	/* дескриптор потока */
+	HSTREAM stream;	/* РґРµСЃРєСЂРёРїС‚РѕСЂ РїРѕС‚РѕРєР° */
 	stream = BASS_StreamCreateFile(FALSE, song->Location().c_str(), 0, 0, 0);
 	if (!stream) {
 		stream = BASS_StreamCreateURL(song->Location().c_str(), 0, 0, NULL, 0);
 		if (!stream) {
-			throw std::runtime_error("По указанному пути не удалось найти файл!");
+			throw std::runtime_error("РџРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ РїСѓС‚Рё РЅРµ СѓРґР°Р»РѕСЃСЊ РЅР°Р№С‚Рё С„Р°Р№Р»!");
 		}
 	}
-	/* воспроизводим звук */
+	/* РІРѕСЃРїСЂРѕРёР·РІРѕРґРёРј Р·РІСѓРє */
 	BASS_ChannelPlay(stream, TRUE);
 	string butt = "||";
 	while (true) {
 		(*Menu).setKol(2);
 		(*Menu)[0] = butt;
-		(*Menu)[1] = "Выход";
+		(*Menu)[1] = "Р’С‹С…РѕРґ";
 		(*Menu).DrawMenuH(3, 10, 5);
 		switch ((*Menu).getLastClause()) {
 		case 1: butt == "||" ? butt = "|>" : butt = "||";
 			if (butt == "|>") {
-				/* останавливаем звучание */
+				/* РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РІСѓС‡Р°РЅРёРµ */
 				BASS_ChannelPause(stream);
 			}
 			else {
-				/* возобновляем звучание */
+				/* РІРѕР·РѕР±РЅРѕРІР»СЏРµРј Р·РІСѓС‡Р°РЅРёРµ */
 				BASS_ChannelPlay(stream, false);
 			}
 			break;
 		case 2: 
-			/* останавливаем звучание */
+			/* РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РІСѓС‡Р°РЅРёРµ */
 			BASS_ChannelStop(stream);
-			/* освобождаем ресурсы */
+			/* РѕСЃРІРѕР±РѕР¶РґР°РµРј СЂРµСЃСѓСЂСЃС‹ */
 			BASS_StreamFree(stream);
 			return;
 			break;
@@ -533,13 +533,13 @@ void Interface::PlaySong(const Song * song)
 void Interface::AddSong()
 {
 	Song newSong;
-	cout << "Введите адрес / ссылку на песню: ";
+	cout << "Р’РІРµРґРёС‚Рµ Р°РґСЂРµСЃ / СЃСЃС‹Р»РєСѓ РЅР° РїРµСЃРЅСЋ: ";
 	std::getline(cin,newSong.Location());
 
 	ID3v2_tag* tag = load_tag(newSong.Location().c_str()); // Load the full tag from the file
 	if (tag == NULL)
 	{
-		throw std::runtime_error("Файл, заданный пользователем имеет неверный формат!");
+		throw std::runtime_error("Р¤Р°Р№Р», Р·Р°РґР°РЅРЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј РёРјРµРµС‚ РЅРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚!");
 	}
 	string o;
 

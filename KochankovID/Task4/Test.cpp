@@ -1,4 +1,4 @@
-#include <bass.h>
+﻿#include <bass.h>
 #include <locale>
 #include "Interface.h"
 #pragma comment (lib, "bass")

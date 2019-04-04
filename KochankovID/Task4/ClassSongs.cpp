@@ -1,4 +1,4 @@
-#include "ClassSongs.h"
+п»ї#include "ClassSongs.h"
 #include <fstream>
 #include <string>
 
@@ -34,7 +34,7 @@ Collection<Person*> ClassSongs::getPoets(std::string name)
 {
 	Collection<Person*> Persons;
 	for (int i = 0; i < Songs.Count(); i++) {
-		if ((Songs[i].Poet().Name() != "Неизвестно")&&(Songs[i].Poet().Name().find(name) != -1)) {
+		if ((Songs[i].Poet().Name() != "РќРµРёР·РІРµСЃС‚РЅРѕ")&&(Songs[i].Poet().Name().find(name) != -1)) {
 			int j = 0;
 			for (; j < Persons.Count(); j++) {
 				if (Songs[i].Poet() == *(Persons[j])) {
@@ -59,7 +59,7 @@ Collection<Person*> ClassSongs::getPoets()
 				break;
 			}
 		}
-		if ((j == Persons.Count()) && (Songs[i].Poet().Name() != "Неизвестно")) {
+		if ((j == Persons.Count()) && (Songs[i].Poet().Name() != "РќРµРёР·РІРµСЃС‚РЅРѕ")) {
 			Persons.Add(&Songs[i].Poet());
 		}
 	}
@@ -70,7 +70,7 @@ Collection<Person*> ClassSongs::getComositers(std::string name)
 {
 	Collection<Person*> Persons;
 	for (int i = 0; i < Songs.Count(); i++) {
-		if ((Songs[i].Compositer().Name() != "Неизвестно") && (Songs[i].Compositer().Name().find(name) != -1)) {
+		if ((Songs[i].Compositer().Name() != "РќРµРёР·РІРµСЃС‚РЅРѕ") && (Songs[i].Compositer().Name().find(name) != -1)) {
 			int j = 0;
 			for (; j < Persons.Count(); j++) {
 				if (Songs[i].Compositer() == *(Persons[j])) {
@@ -95,7 +95,7 @@ Collection<Person*> ClassSongs::getComositers()
 				break;
 			}
 		}
-		if ((j == Persons.Count()) && (Songs[i].Compositer().Name() != "Неизвестно")) {
+		if ((j == Persons.Count()) && (Songs[i].Compositer().Name() != "РќРµРёР·РІРµСЃС‚РЅРѕ")) {
 			Persons.Add(&Songs[i].Compositer());
 		}
 	}
@@ -106,7 +106,7 @@ Collection<Person*> ClassSongs::getExecutorts(std::string name)
 {
 	Collection<Person*> Persons;
 	for (int i = 0; i < Songs.Count(); i++) {
-		if ((Songs[i].Executor().Name() != "Неизвестно") && (Songs[i].Executor().Name().find(name) != -1)) {
+		if ((Songs[i].Executor().Name() != "РќРµРёР·РІРµСЃС‚РЅРѕ") && (Songs[i].Executor().Name().find(name) != -1)) {
 			int j = 0;
 			for (; j < Persons.Count(); j++) {
 				if (Songs[i].Executor() == *(Persons[j])) {
@@ -132,7 +132,7 @@ Collection<Person*> ClassSongs::getExecutorts()
 				break;
 			}
 		}
-		if ((j == Persons.Count())&&(Songs[i].Executor().Name() != "Неизвестно")) {
+		if ((j == Persons.Count())&&(Songs[i].Executor().Name() != "РќРµРёР·РІРµСЃС‚РЅРѕ")) {
 			Persons.Add(&Songs[i].Executor());
 		}
 	}
