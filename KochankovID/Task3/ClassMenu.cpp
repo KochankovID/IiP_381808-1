@@ -1,38 +1,32 @@
 ﻿#include "ClassMenu.h"
 #include <algorithm>
 #include <iostream>
-
+#include <limits>
 
 using namespace std;
 
-ClassMenu::ClassMenu() : kol_(1), last_clause_(-1)
+ClassMenu::ClassMenu() : kol_(0), last_clause_(-1), menu_()
 {
-	menu_ = new string[1];
-	*menu_ = ' ';
 }
 
-ClassMenu::ClassMenu(int kol, const std::string * menu) : kol_(kol), last_clause_(-1)
+ClassMenu::ClassMenu(int kol, const std::string * menu) : kol_(kol), last_clause_(-1), menu_(kol_)
 {
-	menu_ = new string[kol_];
 	for (int i = 0; i < kol_; i++) {
 		menu_[i] = menu[i];
 	}
 }
 
-ClassMenu::ClassMenu(int kol) : kol_(kol), last_clause_(-1)
+ClassMenu::ClassMenu(int kol) : kol_(kol), last_clause_(-1), menu_(kol)
 {
-	menu_ = new string[kol_];
 	for (int i = 0; i < kol_; i++) {
 		menu_[i] = ' ';
 	}
 }
 
-ClassMenu::ClassMenu(const std::string menuStr) : last_clause_(-1)
+ClassMenu::ClassMenu(const std::string menuStr) : last_clause_(-1), menu_(count(menuStr.begin(), menuStr.end(), '\n')), kol_(count(menuStr.begin(), menuStr.end(), '\n'))
 {
 	string menu = menuStr;
 	menu += '\n';
-	kol_ = count(menu.begin(), menu.end(), '\n');
-	menu_ = new string[kol_];
 	
 	string::const_iterator b = menu.begin();
 	string::const_iterator e = menu.end();
@@ -44,16 +38,18 @@ ClassMenu::ClassMenu(const std::string menuStr) : last_clause_(-1)
 	}
 }
 
-ClassMenu::ClassMenu(const ClassMenu & m) : kol_(m.kol_), last_clause_(-1)
+ClassMenu::ClassMenu(const ClassMenu & m) : kol_(m.kol_), last_clause_(-1), menu_(kol_)
 {
-	menu_ = new string[kol_];
 	for (int i = 0; i < kol_; i++) {
 		menu_[i] = m.menu_[i];
 	}
 }
 
-void ClassMenu::startMenu(int x, int y) // Функция рисует меню в заданных координатах консоли и обрабатывает нажатия клавиш
+void ClassMenu::startMenu(int x, int y, void(ClassMenu::*paint)(HANDLE, COORD, const int&, const int&) const, const int& but1, const int& but2, const int& margin) // Функция рисует меню в заданных координатах консоли и обрабатывает нажатия клавиш
 {
+	//Проверка на правильность размера отступов
+	if (margin < 1) { throw MenuExeption(InvalideMargine,"Неверный вормат отступов"); };
+
 	// Не используемые в этой функции параметры, необходимые для работы функций
 	DWORD d; 
 	LPDWORD l = &d;
@@ -71,8 +67,8 @@ void ClassMenu::startMenu(int x, int y) // Функция рисует меню 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
 	
 	// Заголовок окна консоли
-	LPCWSTR title = L"Menu";
-	SetConsoleTitle(title);
+	//LPCWSTR title = L"Menu";
+	//SetConsoleTitle(title);
 
 	// Изменение кодовой страницы консоли вывода (нужно для вывода русских символов) 
 	int cp = GetConsoleOutputCP();
@@ -82,25 +78,35 @@ void ClassMenu::startMenu(int x, int y) // Функция рисует меню 
 	SetConsoleTextAttribute(hout, 0x0000|0x0070); // Настройка цвета и фона текста
 	FillConsoleOutputAttribute(hout, 0, 10000, point, l); // Очистка консоли
 
-	paint(hout, point, k); // Вызов функции прорисовки меню
+	(this->*paint)(hout, point, k, margin); // Вызов функции прорисовки меню
+
+	GetAsyncKeyState(VK_SPACE); // Перехват ранее нажатых клавиш
+	Sleep(200); //  время "Дребезга" кнопки
 
 	while (1) // цикл обработки нажатых клавиш
 	{
 
-		if (GetAsyncKeyState(VK_RIGHT)) { // если нажата стрелка вправо, перемещает текущий "выбранный пункт меню" вправо
+		if (GetAsyncKeyState(but2)) { // если нажата стрелка вправо, перемещает текущий "выбранный пункт меню" вправо
 			if (isInRangeNoThrowable(k + 2)) {
-				paint(hout, point, ++k);
-				Sleep(200); // время "дребезга" кнопки 
+				(this->*paint)(hout, point, ++k, margin);
+				while (GetAsyncKeyState(but2) & 0x8000) // Время дребезга кнопки
+				{
+				}
 			}
 		}
-		if (GetAsyncKeyState(VK_LEFT)) { // если нажата стрелка влево, перемещает текущий "выбранный пункт меню" влево
+		if (GetAsyncKeyState(but1)) { // если нажата стрелка влево, перемещает текущий "выбранный пункт меню" влево
 			if (isInRangeNoThrowable(k - 1)) {
-				paint(hout, point, --k);
-				Sleep(200); // время "дребезга" кнопки 
+				(this->*paint)(hout, point, --k, margin);
+				while (GetAsyncKeyState(but1) & 0x8000) // Время дребезга кнопки
+				{
+				}
 			}
 		}
-		if (GetAsyncKeyState(VK_ESCAPE)) { // если нажата клавиша escape, то созраняет текущий "выбранный пункт меню" и выходит из цикла
+		if (GetAsyncKeyState(VK_RETURN)) { // если нажата клавиша Enter, то созраняет текущий "выбранный пункт меню" и выходит из цикла
 			last_clause_ = k + 1;
+			while (GetAsyncKeyState(VK_RETURN) & 0x8000) // Время дребезга кнопки
+			{
+			}
 			break;
 		}
 	}
@@ -111,16 +117,85 @@ void ClassMenu::startMenu(int x, int y) // Функция рисует меню 
 	// Перевод курсора в начало консоли
 	point.X = 0; point.Y = 0;
 	SetConsoleCursorPosition(hout, point);
-	
 	// Возврат кодовой страницы консоли вывода (нужно для вывода русских символов через cout поток) 
 	SetConsoleOutputCP(cp);
+}
 
-	cout << "Выбранный пункт: " << last_clause_ << endl;
+void ClassMenu::startMenu(int x, int y, void(ClassMenu::* paint)(HANDLE, COORD, const int &, const int&, const int &, const int &,  const int*, const std::string*) const, const int & but1, const int & but2, const int & margin, const int & margin1, const int& kolclauses, const int* numOfClauses, const std::string* titles)
+{
+	//Проверка на правильность размера отступов
+	if (margin < 1) { throw MenuExeption(InvalideMargine, "Неверный вормат отступов"); };
+
+	// Не используемые в этой функции параметры, необходимые для работы функций
+	DWORD d;
+	LPDWORD l = &d;
+
+	// Структура координат
+	COORD point;
+
+	// Текущий "выбранный пункт меню"
+	int k = 0;
+
+	// Инициализация координат
+	point.X = x; point.Y = y;
+
+	// Инициализация дескриптора консоли
+	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	// Заголовок окна консоли
+	//LPCWSTR title = L"Menu";
+	//SetConsoleTitle(title);
+
+	// Настройка вывода консоли
+	SetConsoleTextAttribute(hout, 0x0000 | 0x0070); // Настройка цвета и фона текста
+	FillConsoleOutputAttribute(hout, 0, 10000, point, l); // Очистка консоли
+
+	(this->*paint)(hout, point, k, margin, margin1, kolclauses, numOfClauses, titles); // Вызов функции прорисовки меню
+
+	while (GetAsyncKeyState(VK_RETURN) & 0x8000) // Перехват ранее нажатых клавиш
+	{
+	}
+
+	while (1) // цикл обработки нажатых клавиш
+	{
+
+		if (GetAsyncKeyState(but2)) { // если нажата стрелка вправо, перемещает текущий "выбранный пункт меню" вправо
+			if (isInRangeNoThrowable(k + 2)) {
+				(this->*paint)(hout, point, ++k, margin,margin1, kolclauses, numOfClauses,titles);
+				while (GetAsyncKeyState(but2) & 0x8000) // Время дребезга кнопки
+				{
+				}
+			}
+		}
+		if (GetAsyncKeyState(but1)) { // если нажата стрелка влево, перемещает текущий "выбранный пункт меню" влево
+			if (isInRangeNoThrowable(k - 1)) {
+				(this->*paint)(hout, point, --k, margin, margin1, kolclauses, numOfClauses, titles);
+				while (GetAsyncKeyState(but1) & 0x8000) // Время дребезга кнопки
+				{
+				}
+			}
+		}
+		if (GetAsyncKeyState(VK_RETURN)) { // если нажата клавиша Enter, то созраняет текущий "выбранный пункт меню" и выходит из цикла
+			last_clause_ = k + 1;
+			while (GetAsyncKeyState(VK_RETURN) & 0x8000) // Время дребезга кнопки
+			{
+			}
+			break;
+		}
+	}
+
+	SetConsoleTextAttribute(hout, 0x0007 | 0x0000); // Возврат текста к обычному виду
+	FillConsoleOutputAttribute(hout, 0, 10000, point, l); // Очистка консоли
+
+	// Перевод курсора в начало консоли
+	point.X = 0; point.Y = 0;
+	SetConsoleCursorPosition(hout, point);
+
+	cin.ignore();
 }
 
 ClassMenu::~ClassMenu()
 {
-	delete []menu_;
 }
 
 std::string& ClassMenu::operator[](int index)
@@ -150,7 +225,7 @@ bool ClassMenu::isInRangeNoThrowable(int index) const
 	return true;
 }
 
-void ClassMenu::paint(HANDLE hout, COORD point, int k) const
+void ClassMenu::paintH(HANDLE hout, COORD point, const int& k, const int& margin) const
 {
 	// Строка перевода
 	char* s;
@@ -169,7 +244,7 @@ void ClassMenu::paint(HANDLE hout, COORD point, int k) const
 			copy(menu_[i].begin(), menu_[i].end(), s);
 			WriteFile(hout, s, menu_[i].length(), l, NULL);
 			point.X += menu_[i].length();
-			point.X += 4;
+			point.X += margin;
 			SetConsoleTextAttribute(hout, 0x0000 | 0x0070);
 			continue;
 		}
@@ -180,10 +255,89 @@ void ClassMenu::paint(HANDLE hout, COORD point, int k) const
 		copy(menu_[i].begin(), menu_[i].end(), s);
 		WriteFile(hout, s, menu_[i].length(), l, NULL);
 		point.X += menu_[i].length();
-		point.X += 4;
+		point.X += margin;
 		delete[]s;
 	}
 }
+
+void ClassMenu::paintW(HANDLE hout, COORD point, const int& k, const int& margin) const
+{
+	// Строка перевода
+	char* s;
+
+	// Не используемые в этой функции параметры, необходимые для работы функций
+	DWORD d;
+	LPDWORD l = &d;
+
+	// Цикл переисовки меню
+	for (int i = 0; i < kol_; i++) {
+
+		if (i == k) { // Если текцщий элемент в фокусе, то выделяем фон текста
+			SetConsoleTextAttribute(hout, 0x0000 | 0x0080);
+			SetConsoleCursorPosition(hout, point);
+			s = new char[menu_[i].size() + 1];
+			copy(menu_[i].begin(), menu_[i].end(), s);
+			WriteFile(hout, s, menu_[i].length(), l, NULL);
+			point.Y += margin;
+			SetConsoleTextAttribute(hout, 0x0000 | 0x0070);
+			continue;
+		}
+
+		// Остальные элементы рисуем с ярким фоном
+		SetConsoleCursorPosition(hout, point);
+		s = new char[menu_[i].size() + 1];
+		copy(menu_[i].begin(), menu_[i].end(), s);
+		WriteFile(hout, s, menu_[i].length(), l, NULL);
+		point.Y += margin;
+		delete[]s;
+	}
+}
+
+void ClassMenu::paintCompositMenu(HANDLE hout, COORD point, const int & k, const int & margin, const int & margin1, const int & kolclauses, const int* numOfClauses, const std::string* titles) const
+{
+	// Строка перевода
+	char* s;
+
+	// Не используемые в этой функции параметры, необходимые для работы функций
+	DWORD d;
+	LPDWORD l = &d;
+	int j = 0;
+	// Цикл переисовки меню
+	for (int i = 0; i < kol_; i++) {
+		if((j < kolclauses)&&(i == numOfClauses[j])) {
+			j == 0 ? 0 : point.Y += margin1;
+			SetConsoleCursorPosition(hout, point);
+			SetConsoleTextAttribute(hout, FOREGROUND_GREEN | 0x0000);
+			s = new char[titles[j].size() + 1];
+			copy(titles[j].begin(), titles[j].end(), s);
+			WriteFile(hout, s, titles[j].length(), l, NULL);
+			point.Y += (margin1);
+			SetConsoleTextAttribute(hout, 0x0000 | 0x0070);
+			j++;
+			i--;
+			continue;
+		}
+		if (i == k) { // Если текцщий элемент в фокусе, то выделяем фон текста
+			SetConsoleTextAttribute(hout, 0x0000 | 0x0080);
+			SetConsoleCursorPosition(hout, point);
+			s = new char[menu_[i].size() + 1];
+			copy(menu_[i].begin(), menu_[i].end(), s);
+			WriteFile(hout, s, menu_[i].length(), l, NULL);
+			point.Y += margin;
+			SetConsoleTextAttribute(hout, 0x0000 | 0x0070);
+			continue;
+		}
+		// Остальные элементы рисуем с ярким фоном
+		SetConsoleCursorPosition(hout, point);
+		s = new char[menu_[i].size() + 1];
+		copy(menu_[i].begin(), menu_[i].end(), s);
+		WriteFile(hout, s, menu_[i].length(), l, NULL);
+		point.Y += margin;
+		delete[]s;
+	}
+}
+
+
 
 std::ostream& operator<<(std::ostream& out, const ClassMenu& m)
 {
@@ -199,11 +353,8 @@ istream& operator>>(istream& in, ClassMenu& m)
 {
 	int kol;
 	in >> kol;
-	if (kol > m.kol_) {
-		delete[]m.menu_;
-	}
 	m.kol_ = kol;
-	m.menu_ = new string[kol];
+	m.menu_ = Collection<string>(kol);
 	for (int i = 0; i < m.kol_; i++) {
 		in >> m.menu_[i];
 	}

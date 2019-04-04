@@ -40,7 +40,9 @@ int main()
 	getchar();
 
 	// Тест меню
-	m3.startMenu(0,0);
+	string s[] = { "asdfasd" };
+	int a[] = { 0 };
+	m3.DrawCMenu(1, a, s);
 	OUT(m3.getLastClause());
 
 	// Тест записи в файл и считывание из него 

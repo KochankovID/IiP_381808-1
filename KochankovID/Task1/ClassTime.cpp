@@ -2,6 +2,7 @@
 #include <iostream>
 
 using namespace std;
+using ClassTime::Time;
 
 // Конструктор поумолчанию
 Time::Time()
@@ -247,14 +248,14 @@ bool Time::operator<=(const Time & C) const
 
 
 
-ostream& operator<< (ostream& stream, const Time& C) {
-	stream << "Hours : " << C.getHou() << endl;
-	stream << "Minutes : " << C.getMin() << endl;
-	stream << "Seconds : " << C.getSec() << endl;
+std::ostream & ClassTime::operator<<(std::ostream & stream, const Time & C) {
+	stream <<C.getHou() << endl;
+	stream << C.getMin() << endl;
+	stream << C.getSec() << endl;
 	return stream;
 }
 
-istream& operator>> (istream& stream, Time& C)
+std::istream & ClassTime::operator>>(std::istream & stream, Time & C)
 {
 	stream >> C.hou_;
 	if ((C.hou_ > 23) || (C.hou_ < 0)) {

@@ -4,6 +4,7 @@
 #include "ClassTime.h"
 
 using namespace std;
+using namespace ClassTime;
 int main()
 {
 	setlocale(LC_CTYPE, "Russian");
@@ -11,7 +12,6 @@ int main()
 	// Конструктор по умлочанию
 	Time t;
 	cout << t << endl;
-
 	// Конструктор инициализатор
 	int a = 0, b = 0, c = 0;
 	cin >> a >> b >> c;
