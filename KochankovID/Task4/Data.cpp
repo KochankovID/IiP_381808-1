@@ -52,7 +52,7 @@ std::istream & operator>>(std::istream & stream, Data & C)
 	stream >> C.day;
 	stream >> C.month;
 	stream >> C.year;
-	C.IsRight();
+	//C.IsRight();
 	return stream;
 }
 

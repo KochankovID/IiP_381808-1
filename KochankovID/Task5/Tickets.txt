@@ -1,0 +1,14 @@
+﻿1556771538 100
+Ilya Kochankov
+1
+0 1 Lastochka
+0 Simple_vagon
+0 0 Simple_place
+
+1556771584 100
+Ilya Kochankov
+1
+5 0 Lastochka
+0 Simple_vagon
+0 0 Simple_place
+

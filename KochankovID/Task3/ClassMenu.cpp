@@ -110,7 +110,7 @@ void ClassMenu::startMenu(int x, int y, void(ClassMenu::*paint)(HANDLE, COORD, c
 			break;
 		}
 	}
-
+	cin.ignore(cin.rdbuf()->in_avail());
 	SetConsoleTextAttribute(hout, 0x0007 | 0x0000); // Возврат текста к обычному виду
 	FillConsoleOutputAttribute(hout, 0, 10000, point, l); // Очистка консоли
 
@@ -183,15 +183,13 @@ void ClassMenu::startMenu(int x, int y, void(ClassMenu::* paint)(HANDLE, COORD, 
 			break;
 		}
 	}
-
+	cin.ignore(cin.rdbuf()->in_avail());
 	SetConsoleTextAttribute(hout, 0x0007 | 0x0000); // Возврат текста к обычному виду
 	FillConsoleOutputAttribute(hout, 0, 10000, point, l); // Очистка консоли
 
 	// Перевод курсора в начало консоли
 	point.X = 0; point.Y = 0;
 	SetConsoleCursorPosition(hout, point);
-
-	cin.ignore();
 }
 
 ClassMenu::~ClassMenu()
@@ -245,6 +243,7 @@ void ClassMenu::paintH(HANDLE hout, COORD point, const int& k, const int& margin
 			WriteFile(hout, s, menu_[i].length(), l, NULL);
 			point.X += menu_[i].length();
 			point.X += margin;
+			delete[]s;
 			SetConsoleTextAttribute(hout, 0x0000 | 0x0070);
 			continue;
 		}
@@ -279,6 +278,7 @@ void ClassMenu::paintW(HANDLE hout, COORD point, const int& k, const int& margin
 			copy(menu_[i].begin(), menu_[i].end(), s);
 			WriteFile(hout, s, menu_[i].length(), l, NULL);
 			point.Y += margin;
+			delete[]s;
 			SetConsoleTextAttribute(hout, 0x0000 | 0x0070);
 			continue;
 		}
@@ -287,6 +287,7 @@ void ClassMenu::paintW(HANDLE hout, COORD point, const int& k, const int& margin
 		SetConsoleCursorPosition(hout, point);
 		s = new char[menu_[i].size() + 1];
 		copy(menu_[i].begin(), menu_[i].end(), s);
+		delete s;
 		WriteFile(hout, s, menu_[i].length(), l, NULL);
 		point.Y += margin;
 		delete[]s;
@@ -312,6 +313,7 @@ void ClassMenu::paintCompositMenu(HANDLE hout, COORD point, const int & k, const
 			copy(titles[j].begin(), titles[j].end(), s);
 			WriteFile(hout, s, titles[j].length(), l, NULL);
 			point.Y += (margin1);
+			delete[]s;
 			SetConsoleTextAttribute(hout, 0x0000 | 0x0070);
 			j++;
 			i--;
@@ -324,6 +326,7 @@ void ClassMenu::paintCompositMenu(HANDLE hout, COORD point, const int & k, const
 			copy(menu_[i].begin(), menu_[i].end(), s);
 			WriteFile(hout, s, menu_[i].length(), l, NULL);
 			point.Y += margin;
+			delete[]s;
 			SetConsoleTextAttribute(hout, 0x0000 | 0x0070);
 			continue;
 		}
